@@ -6,17 +6,37 @@ from pygame import time as pytime
 ANCHO = 640
 ALTO = 480
 
+capacidad = 10000
+
+# MODELO 1: RESURRECCIÓN DE MUERTOS
+'''
+alpha = 0.005 # Natalidad humanos
+beta = 0.0055 # Infección
+delta = 0.0001 # Muerte natural humanos
+xi = 0.009 # Resurrección
+alpha2 = 0.0075 # Muerte por humanos de los zombies
+sigma = 0.05 # Muerte natural zombies
+'''
+# MODELO 2: VIRUS ZOMBIE
+
 alpha = 0.005 # Natalidad humanos
 beta = 0.0006 # Infección
 delta = 0.0001 # Muerte natural humanos
-xi = 0.009 # Resurrección
+xi = 0 # Resurrección
 alpha2 = 0.0005 # Muerte por humanos de los zombies
 sigma = 0.004 # Muerte natural zombies
-capacidad = 10000
-
-tmax = 100
 
 
+# MODELO 3: VIRUS ZOMBIE CON BAJA INFECCIÓN
+'''
+alpha = 0.005 # Natalidad humanos
+beta = 0.0004 # Infección
+delta = 0.0001 # Muerte natural humanos
+xi = 0 # Resurrección
+alpha2 = 0.0005 # Muerte por humanos de los zombies
+sigma = 0.004 # Muerte natural zombies
+'''
+tmax = 1000
 
 def load_image(filename, transparent=False):
 	try: image = pygame.image.load(filename)
@@ -84,7 +104,7 @@ def main():
 			screen.blit(humano, (ANCHO / 2 - 80+16*(k%10),130+k//10*12))
 			k += 1
 
-		humanos = math.floor(soluciones[1][dia*10])//10+1
+		humanos = math.floor(soluciones[1][dia*10])//10
 		if (humanos > 100): humanos = 100
 		
 		k = 0
@@ -93,6 +113,7 @@ def main():
 			k += 1
 		
 		humanos = math.floor(soluciones[2][dia*10])//10
+		if humanos > 50: humanos = 50
 		k = 0
 		while k < humanos:
 			screen.blit(muerto, (ANCHO / 2 - 120+12*(k%10),300+k//10*10))
